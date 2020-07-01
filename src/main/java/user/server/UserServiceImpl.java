@@ -9,7 +9,7 @@ import java.util.*;
 public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase
 {
 
-    static final List<User> users = new ArrayList<>();
+    static final Map<String, User> users = new HashMap<>();
 
     @Override
     public void listUsers( ListUsersRequest request, StreamObserver<ListUsersResponse> responseObserver )
@@ -17,7 +17,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase
         System.out.println("[server-java] ListUsers operation was invoked");
 
         responseObserver.onNext(ListUsersResponse.newBuilder()
-                .addAllUsers(users)
+                .addAllUsers(users.values())
                 .build());
 
         responseObserver.onCompleted();
@@ -30,10 +30,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase
 
         final String userId = request.getUserId();
 
-        User userWithId = users.stream()
-                .filter(user -> userId.equals(user.getId()))
-                .findAny()
-                .orElse(null);
+        User userWithId = users.get(userId);
 
         if (userWithId == null) {
             responseObserver.onError(Status.NOT_FOUND
@@ -55,7 +52,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase
         System.out.println("[server-java] AddUser operation was invoked");
 
         User userWithId = request.getUser().toBuilder().setId(UUID.randomUUID().toString()).build();
-        users.add(userWithId);
+        users.put(userWithId.getId(), userWithId);
 
         responseObserver.onNext(AddUserResponse.newBuilder()
                 .setUser(userWithId)
@@ -71,10 +68,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase
 
         final String userId = request.getUser().getId();
 
-        User userWithId = users.stream()
-                .filter(user -> userId.equals(user.getId()))
-                .findAny()
-                .orElse(null);
+        User userWithId = users.get(userId);
 
         if (userWithId == null) {
             responseObserver.onError(Status.NOT_FOUND
@@ -106,6 +100,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase
         }
 
         User updatedUser = builder.build();
+        users.put(userId, updatedUser);
 
         responseObserver.onNext(UpdateUserResponse.newBuilder()
                 .setUser(updatedUser)
@@ -121,10 +116,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase
 
         final String userId = request.getUserId();
 
-        User userWithId = users.stream()
-                .filter(user -> userId.equals(user.getId()))
-                .findAny()
-                .orElse(null);
+        User userWithId = users.get(userId);
 
         if (userWithId == null) {
             responseObserver.onError(Status.NOT_FOUND
@@ -133,7 +125,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase
             return;
         }
 
-        users.removeIf(user -> userId.equals(user.getId()));
+        users.remove(userId);
 
         responseObserver.onNext(DeleteUserResponse.newBuilder()
                 .setUser(userWithId)

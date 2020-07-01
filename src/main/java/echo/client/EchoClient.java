@@ -26,7 +26,7 @@ public class EchoClient
 
     private static void echoCall(ManagedChannel channel)
     {
-        System.out.println("making Echo RPC call");
+        System.out.println("[client-java] making Echo RPC call");
 
         EchoServiceBlockingStub blockingClient = EchoServiceGrpc.newBlockingStub(channel);
 
