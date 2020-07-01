@@ -10,7 +10,7 @@ Example scenarious :
 ## Installation
 Import project as gradle project to your IDE.\
 Under the hood gradle plugin [google/protobuf-gradle-plugin](https://github.com/google/protobuf-gradle-plugin) is used for .proto generation.\
-Please visit the link for more details.\
+Please visit the link for more details.
 
 ## Usage
 Generate Java classes from .proto file and compile the project
@@ -28,7 +28,7 @@ user.client.Client.java
 
 ## Language interoperability
 In many scenarious client and server could be differently implemented.\
-gRPC being platform agnostic by design allows such communication, using same .proto files across all participants as the single source of truth.\
+gRPC being platform agnostic by design allows such communication, using same .proto files across all participants as the single source of truth.
 
 In otder to try such scenario current project could be used together with [grpc-learning-rest-proxy](https://github.com/oleg-kovalov/grpc-learning-rest-proxy) project written in Go.
 
