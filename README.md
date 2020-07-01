@@ -17,11 +17,11 @@ Generate Java classes from .proto file and compile the project
 ```bash
 $ gradlew clean generateProto build
 ```
-Start gRPC server
+Start Java gRPC server
 ```java
 user.server.Server.java
 ```
-Start gRPC client 
+Start Java gRPC client 
 ```java
 user.client.Client.java
 ```
@@ -30,7 +30,7 @@ user.client.Client.java
 In many scenarious client and server could be differently implemented.\
 gRPC being platform agnostic by design allows such communication, using same .proto files across all participants as the single source of truth.
 
-In otder to try such scenario current project could be used together with [grpc-learning-rest-proxy](https://github.com/oleg-kovalov/grpc-learning-rest-proxy) project written in Go.
+In order to try such scenario current project could be used together with [grpc-learning-rest-proxy](https://github.com/oleg-kovalov/grpc-learning-rest-proxy) project written in Go.
 
 Start Golang gRPC server
 ```bash
